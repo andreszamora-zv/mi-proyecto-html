@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+  <title>Tarjeta Día del Niño 🎉</title>
+  <meta name="theme-color" content="#ff6b6b" />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body,html{height:100%;font-family:Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;color:#fff;overflow-x:hidden;overflow-y:auto;}
+    body{background:linear-gradient(270deg,#ff6b6b,#feca57,#48dbfb,#1dd1a1,#5f27cd);background-size:1000% 1000%;animation:bgshift 20s ease infinite;}
+    @keyframes bgshift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:60px 20px;text-align:center;}
+    .card{width:min(480px,95vw);background:rgba(255,255,255,.15);border-radius:32px;padding:50px 35px;box-shadow:0 25px 60px rgba(0,0,0,.5), inset 0 0 0 2px rgba(255,255,255,.2);backdrop-filter:blur(10px);transition:all .8s ease;overflow:hidden;position:relative;z-index:5;text-align:center; border: 2px solid #fff;}
+    .title{font-size:30px;font-weight:800;margin:18px 0;text-shadow:2px 2px 12px rgba(0,0,0,.6);}
+    .subtitle{font-size:22px;margin-bottom:25px;opacity:.95;text-shadow:1px 1px 6px rgba(0,0,0,.5);}
+    .message{margin:18px 0;background:rgba(255,255,255,.05);border-radius:24px;padding:30px 25px;line-height:1.8;border:2px dashed rgba(255,255,255,.3);opacity:0;transform:translateY(20px);transition:.6s ease;white-space:pre-line;display:none;word-break:break-word;position:relative;z-index:5; font-size:20px;}
+    .message.show{opacity:1;transform:translateY(0);display:block;}
+    .bear{font-size:70px;text-align:center;opacity:0;transform:scale(.5);transition:.6s ease;margin-top:12px;animation:kiss 2s infinite ease-in-out;display:none;position:relative;z-index:5;}
+    .bear.show{opacity:1;transform:scale(1);display:block;}
+    @keyframes kiss{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.1)}}
+    .hearts{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
+    .heart{position:absolute;font-size:26px;opacity:.85;animation:rise linear forwards;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));}
+    @keyframes rise{0%{transform:translateY(100vh) scale(.8) rotate(0deg)}100%{transform:translateY(-10vh) scale(1.2) rotate(360deg);opacity:0}}
+    .floatingStar{position:absolute;font-size:20px;opacity:.8;animation:floatStar 4s infinite alternate;}
+    @keyframes floatStar{0%{transform:translateY(0) rotate(0deg)}100%{transform:translateY(-15px) rotate(360deg)}}
+    .btn{margin-top:25px;padding:12px 25px;border-radius:18px;background:#ff6b6b;font-size:18px;font-weight:700;color:#fff;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.35);transition:all .3s ease;}
+    .btn:hover{transform:scale(1.05);animation:float 1s infinite alternate;}
+    @keyframes float{0%{transform:translateY(0) scale(1.05)}100%{transform:translateY(-6px) scale(1.05)}}
+    #buttonContainer{display:flex;justify-content:center;margin-top:25px;}
+  </style>
+</head>
+<body>
+  <div class="hearts" id="bg"></div>
+  <main class="wrap">
+    <section id="card" class="card">
+      <div class="title">Para mi niño favorito ❤️</div>
+      <div class="subtitle">del chico de las poesías</div>
+      <div id="buttonContainer">
+        <button class="btn" id="openBtn">Abrir Carta</button>
+      </div>
+      <div id="msg" class="message">
+        Feliz Día del Niño, mi amor.
+
+Contigo vuelvo a sentirme chiquito, riéndonos de todo y soñando sin miedo.
+
+Gracias por ser mi compañero de juegos, aventuras y vida.
+
+Nunca olvides que siempre vas a ser mi niño favorito.
+
+Con mucho amor, tu zaguatito 🐶
+💌
+
+Te amo mi amor 💕
+
+<div id="buttonContainer2">
+<button class="btn" id="nextBtn">Siguiente</button>
+</div>
+      </div>
+      <div id="endMsg" class="message">Disfruta tu día mi amor, espero verte pronto, te amo mucho 💖
+<div id="bearEnd" class="bear">🐻💋</div>
+<button class="btn" id="restartBtn">Volver a Empezar</button>
+</div>
+    </section>
+  </main>
+  <script>
+    const bg = document.getElementById('bg');
+    const msg = document.getElementById('msg');
+    const endMsg = document.getElementById('endMsg');
+    const bearEnd = document.getElementById('bearEnd');
+    const openBtn = document.getElementById('openBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const restartBtn = document.getElementById('restartBtn');
+
+    function confettiHearts(n=24){
+      const emojis = ['🎈','🎉','💖','💫','🌈','✨'];
+      for(let i=0;i<n;i++){
+        const s = document.createElement('span');
+        s.className='heart';
+        s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        s.style.left = (Math.random()*100)+'vw';
+        s.style.animationDuration = (5+Math.random()*4)+'s';
+        s.style.fontSize = (22+Math.random()*28)+'px';
+        bg.appendChild(s);
+        setTimeout(()=>s.remove(), 9000);
+      }
+    }
+
+    function floatingStars(n=10){
+      const card = document.getElementById('card');
+      const emojis = ['⭐','✨','💫'];
+      for(let i=0;i<n;i++){
+        const s = document.createElement('span');
+        s.className='floatingStar';
+        s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        s.style.left = Math.random()*90+'%';
+        s.style.top = Math.random()*60+'%';
+        s.style.fontSize = 14 + Math.random()*16 + 'px';
+        card.appendChild(s);
+        setTimeout(()=>s.remove(), 6000);
+      }
+    }
+
+    openBtn.addEventListener('click', ()=>{
+      openBtn.style.display='none';
+      msg.style.display='block';
+      msg.classList.add('show');
+      confettiHearts(36);
+      floatingStars(12);
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      msg.style.display='none';
+      msg.classList.remove('show');
+      endMsg.style.display='block';
+      endMsg.classList.add('show');
+      bearEnd.style.display='block';
+      bearEnd.classList.add('show');
+      floatingStars(8);
+    });
+
+    restartBtn.addEventListener('click', ()=>{
+      endMsg.style.display='none';
+      endMsg.classList.remove('show');
+      bearEnd.style.display='none';
+      openBtn.style.display='block';
+    });
+
+    setInterval(()=>confettiHearts(2+Math.floor(Math.random()*3)),1500);
+  </script>
+</body>
+</html>
